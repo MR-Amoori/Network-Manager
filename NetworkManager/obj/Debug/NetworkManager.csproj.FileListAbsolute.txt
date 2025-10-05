@@ -1,0 +1,7 @@
+C:\Users\moham\source\repos\NetworkManager\NetworkManager\bin\Debug\NetworkManager.exe.config
+C:\Users\moham\source\repos\NetworkManager\NetworkManager\bin\Debug\NetworkManager.exe
+C:\Users\moham\source\repos\NetworkManager\NetworkManager\bin\Debug\NetworkManager.pdb
+C:\Users\moham\source\repos\NetworkManager\NetworkManager\obj\Debug\NetworkManager.csprojAssemblyReference.cache
+C:\Users\moham\source\repos\NetworkManager\NetworkManager\obj\Debug\NetworkManager.csproj.CoreCompileInputs.cache
+C:\Users\moham\source\repos\NetworkManager\NetworkManager\obj\Debug\NetworkManager.exe
+C:\Users\moham\source\repos\NetworkManager\NetworkManager\obj\Debug\NetworkManager.pdb
