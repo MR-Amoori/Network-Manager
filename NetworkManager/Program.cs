@@ -7,10 +7,10 @@ namespace NetworkManager
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("لطفا یک گزینه انتخاب کنید:");
-            Console.WriteLine("1: فعال کردن شبکه بین دو سیستم با IP های استاتیک");
-            Console.WriteLine("2: غیرفعال کردن شبکه و بازگرداندن تنظیمات به حالت پیشفرض");
-            Console.WriteLine("0: خروج");
+            Console.WriteLine("Please Enter Number:");
+            Console.WriteLine("1: Active Static IP.");
+            Console.WriteLine("2: Resrt Network.");
+            Console.WriteLine("0: Exit.");
 
             while (true)
             {
@@ -27,7 +27,7 @@ namespace NetworkManager
                     case "0":
                         return;
                     default:
-                        Console.WriteLine("گزینه نامعتبر است، لطفا دوباره تلاش کنید.");
+                        Console.WriteLine("Error. Again.");
                         break;
                 }
             }
@@ -56,7 +56,7 @@ namespace NetworkManager
                 }
                 else
                 {
-                    Console.WriteLine("سیستم عامل شناسایی نشد. لطفا بررسی کنید.");
+                    Console.WriteLine("Os Not Found. Error!");
                     return;
                 }
 
@@ -66,7 +66,7 @@ namespace NetworkManager
                 // خاموش کردن فایروال
                 RunCommand("netsh advfirewall set allprofiles state off");
 
-                Console.WriteLine("شبکه فعال شد و تنظیمات آی‌پی و اشتراک‌گذاری اعمال شدند.");
+                Console.WriteLine("Active . . . !");
             }
             else
             {
@@ -86,7 +86,7 @@ namespace NetworkManager
                 // روشن کردن فایروال
                 RunCommand("netsh advfirewall set allprofiles state on");
 
-                Console.WriteLine("شبکه غیرفعال شد و تنظیمات به حالت پیشفرض بازگردانده شدند.");
+                Console.WriteLine("Reset Network . . . !");
             }
         }
 
@@ -183,7 +183,7 @@ namespace NetworkManager
                 string error = process.StandardError.ReadToEnd();
                 if (!string.IsNullOrEmpty(error))
                 {
-                    Console.WriteLine("خطا: " + error);
+                    Console.WriteLine("Error: " + error);
                 }
             }
         }
