@@ -7,10 +7,31 @@ namespace NetworkManager
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please Enter Number:");
-            Console.WriteLine("1: Active Static IP.");
-            Console.WriteLine("2: Resrt Network.");
-            Console.WriteLine("0: Exit.");
+            Console.WriteLine("Please select your operating system:");
+            Console.WriteLine("1: Windows 10");
+            Console.WriteLine("2: Windows 11");
+            Console.WriteLine("Enter your choice:");
+
+            string osSelection = Console.ReadLine();
+            string operatingSystem = "";
+
+            switch (osSelection)
+            {
+                case "1":
+                    operatingSystem = "Windows 10";
+                    break;
+                case "2":
+                    operatingSystem = "Windows 11";
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Exiting the program...");
+                    return;
+            }
+
+            Console.WriteLine("Please select an option:");
+            Console.WriteLine("1: Enable network and set static IP addresses");
+            Console.WriteLine("2: Disable network and reset settings to default");
+            Console.WriteLine("0: Exit");
 
             while (true)
             {
@@ -19,63 +40,57 @@ namespace NetworkManager
                 switch (choice)
                 {
                     case "1":
-                        ConfigureNetwork(true);
+                        ConfigureNetwork(operatingSystem, true);
                         break;
                     case "2":
-                        ConfigureNetwork(false);
+                        ConfigureNetwork(operatingSystem, false);
                         break;
                     case "0":
+                        Console.WriteLine("Exiting...");
                         return;
                     default:
-                        Console.WriteLine("Error. Again.");
+                        Console.WriteLine("Invalid option. Please try again.");
                         break;
                 }
             }
         }
 
         /// <summary>
-        /// فعال یا غیرفعال کردن شبکه بین دو سیستم و تنظیم IP مناسب بر اساس سیستم عامل
+        /// فعال یا غیرفعال کردن شبکه بین دو سیستم و تنظیم IP مناسب بر اساس سیستم عامل انتخاب‌شده
         /// </summary>
+        /// <param name="os">سیستم عاملی که کاربر انتخاب کرده (ویندوز 10 یا 11)</param>
         /// <param name="enable">True برای فعال کردن و False برای غیرفعال کردن</param>
-        private static void ConfigureNetwork(bool enable)
+        private static void ConfigureNetwork(string os, bool enable)
         {
-            // تشخیص نوع سیستم عامل
-            string osVersion = GetOSVersion();
-
             if (enable)
             {
-                if (osVersion == "Windows 10")
+                if (os == "Windows 10")
                 {
-                    // تنظیم آی‌پی استاتیک برای کامپیوتر ویندوز 10
+                    // تنظیم آی‌پی استاتیک برای ویندوز 10
                     SetIPAddress("Ethernet", "192.168.0.10", "255.255.255.0");
                 }
-                else if (osVersion == "Windows 11")
+                else if (os == "Windows 11")
                 {
-                    // تنظیم آی‌پی استاتیک برای لپ‌تاپ ویندوز 11
+                    // تنظیم آی‌پی استاتیک برای ویندوز 11
                     SetIPAddress("Wi-Fi", "192.168.0.11", "255.255.255.0");
                 }
-                else
-                {
-                    Console.WriteLine("Os Not Found. Error!");
-                    return;
-                }
 
-                // فعال کردن تنظیمات اشتراک‌گذاری (Private، Public، All Networks)
+                // فعال کردن تنظیمات اشتراک‌گذاری
                 EnableSharingOptions();
 
                 // خاموش کردن فایروال
                 RunCommand("netsh advfirewall set allprofiles state off");
 
-                Console.WriteLine("Active . . . !");
+                Console.WriteLine("Network has been enabled, static IP addresses set, and sharing options are enabled.");
             }
             else
             {
                 // بازگرداندن تنظیمات آی‌پی به حالت DHCP
-                if (osVersion == "Windows 10")
+                if (os == "Windows 10")
                 {
                     ResetIPAddress("Ethernet");
                 }
-                else if (osVersion == "Windows 11")
+                else if (os == "Windows 11")
                 {
                     ResetIPAddress("Wi-Fi");
                 }
@@ -86,32 +101,7 @@ namespace NetworkManager
                 // روشن کردن فایروال
                 RunCommand("netsh advfirewall set allprofiles state on");
 
-                Console.WriteLine("Reset Network . . . !");
-            }
-        }
-
-        /// <summary>
-        /// شناسایی نسخه سیستم عامل
-        /// </summary>
-        /// <returns>نام سیستم عامل (ویندوز 10 یا ویندوز 11)</returns>
-        private static string GetOSVersion()
-        {
-            // دریافت نسخه سیستم عامل
-            string osVersion = Environment.OSVersion.Version.ToString();
-            int majorVersion = Environment.OSVersion.Version.Major;
-            int minorVersion = Environment.OSVersion.Version.Minor;
-
-            if (majorVersion == 10 && minorVersion == 0)
-            {
-                return "Windows 10";
-            }
-            else if (majorVersion == 10 && minorVersion == 1)
-            {
-                return "Windows 11";
-            }
-            else
-            {
-                return "Unknown";
+                Console.WriteLine("Network has been disabled, all settings reset to default.");
             }
         }
 
